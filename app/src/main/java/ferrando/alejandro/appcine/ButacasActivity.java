@@ -28,7 +28,7 @@ public class ButacasActivity extends AppCompatActivity {
 
     Button comprar, volver;
     List<Integer> listaDeButacas;
-    List<AsientoOcupado> asientosOcupados;
+    List<AsientoOcupado> asientosOcupados, listaDeButacasOcupadas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +36,7 @@ public class ButacasActivity extends AppCompatActivity {
         setContentView(R.layout.activity_butacas);
         listaDeButacas = new LinkedList<>();
         asientosOcupados = new LinkedList<>();
+        listaDeButacasOcupadas = new LinkedList<>();
 
         String user = ControllerBD.getInstance(this).getUserApp();
         User u = ControllerBD.getInstance(this).getUser(user);
