@@ -26,6 +26,7 @@ import io.realm.Realm;
 
 public class ControllerBD {
     public static Realm con;
+    public static String userApp;
 
     private static ControllerBD instance=new ControllerBD();
     public static ControllerBD getInstance(Context context){
@@ -33,25 +34,26 @@ public class ControllerBD {
         return instance;
     }
 
-    public List<Film> getAllFilmCarteleras(){
-        SimpleDateFormat standar;
-        String standarFormat;
+    public List<Sesion> getAllHoursSesionsFromFilmToday(Film f){
         Calendar now = new GregorianCalendar();
         Date nowDate = now.getTime();
-        standar = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        standarFormat = standar.format( nowDate );
-
+        List<Sesion> sesionsToShow = new LinkedList<>();
         List<Sesion> sesions = getAllSesion();
-        List<Film> filmList = getAllFilms();
-        List<Film> filmToExport = new LinkedList<>();
-        for(Film f : filmList){
-            for(Sesion s : sesions){
-                if(f.getTitulo().equals(s.getIdPelicula())){
-                    filmToExport.add(f);
-                }
+        for(Sesion s : sesions){
+            if(s.getIdPelicula().equals(f.getTitulo()) && s.getHora().getDay() == nowDate.getDay()){
+                sesionsToShow.add(s);
             }
         }
-        return filmToExport;
+        return sesionsToShow;
+    }
+
+    public Tipo getTipoFromSala(Sala s){
+        Sala sas = con.where(Sala.class).equalTo("id", s.getId()).findFirst();
+        return sas.getTipo();
+    }
+
+    public List<Film> getAllFilmCarteleras(){
+        return con.where(Film.class).equalTo("isCartelera", true).findAll();
     }
 
     public List<Film> getAllFilms(){
@@ -67,6 +69,20 @@ public class ControllerBD {
     }
     public int getLastIndexSesion(){
         return (int)con.where(Sesion.class).count();
+    }
+    public int getLastIndexVenta(){
+        return (int)con.where(Venta.class).count();
+    }
+    public int getLastIndexEntrada(){
+        return (int)con.where(Entrada.class).count();
+    }
+
+    public void setUserApp(User u){
+        userApp = u.getUsername();
+    }
+
+    public String getUserApp(){
+        return userApp;
     }
 
     //CRUD DE TODAS LAS CLASES

@@ -1,7 +1,7 @@
 package ferrando.alejandro.appcine.model.tipos;
 
 public enum Tipo {
-    TRES(1), CUATROX(2), NORMAL(3);
+    TRESD(1), CUATRODX(2), NORMAL(3);
 
     private int num;
     Tipo(int i){

@@ -40,10 +40,10 @@ public class SignUpActivity extends AppCompatActivity {
         but.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                User ur = new User();
+                String ur = "";
 
                 if(user != null){
-                    ur = ControllerBD.getInstance(getApplicationContext()).getUser(user);
+                    ur = ControllerBD.getInstance(getApplicationContext()).getUserApp();
                 }
                 String nombreText = nombre.getText().toString();
                 String passText = password.getText().toString();
@@ -74,6 +74,7 @@ public class SignUpActivity extends AppCompatActivity {
                         if(user != null){
                             intent.putExtra("usu",ur);
                         }else{
+                            ControllerBD.getInstance(getApplicationContext()).setUserApp(u);
                             intent.putExtra("usu",u);
                         }
                         startActivity(intent);

@@ -74,10 +74,10 @@ public class AdapterCine extends RecyclerView.Adapter<AdapterCine.ViewHolder>  {
         }
 
         public void setBack(int position) {
-            if (position % 2 != 0) {
-                view.setBackgroundColor(context.getResources().getColor(R.color.principal));
+            if (position % 2 != 1) {
+                view.setBackgroundColor(context.getResources().getColor(R.color.segundo));
             } else {
-                view.setBackgroundColor(context.getResources().getColor(R.color.enPrincipal));
+                view.setBackgroundColor(context.getResources().getColor(R.color.segundoVariante));
             }
         }
     }

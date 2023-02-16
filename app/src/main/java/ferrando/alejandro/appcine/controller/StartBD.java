@@ -46,18 +46,19 @@ public class StartBD {
             f.setCartelera("https://img2.rtve.es/imagenes/travesuras-jaimito/1650538689821.png");
             f.setGenero(TipoGeneros.COMEDIA);
             f.setEdad_min(TipoEdadMin.A);
+            f.setIsInCartelera(true);
 
             Sala s1 = new Sala();
             s1.setColumnas(5);
             s1.setFilas(5);
             s1.setId(1);
-            s1.setTipo(Tipo.CUATROX);
+            s1.setTipo(Tipo.CUATRODX);
 
             Sala s2 = new Sala();
             s2.setColumnas(5);
             s2.setFilas(5);
             s2.setId(2);
-            s2.setTipo(Tipo.TRES);
+            s2.setTipo(Tipo.TRESD);
 
             Sala s3 = new Sala();
             s3.setColumnas(5);

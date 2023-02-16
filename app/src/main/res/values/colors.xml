@@ -13,6 +13,14 @@
     <color name="enPrincipal">#df4661</color>
     <color name="segundo">#ffaaaa</color>
     <color name="segundoVariante">#ffe499</color>
+    <color name="backgroundColor">#FFEDB9</color>
+
+    <color name="principalVarianteB">#614C12</color>
+    <color name="principalB">#552A33</color>
+    <color name="enPrincipalB">#5C202A</color>
+    <color name="segundoB">#5A3D3D</color>
+    <color name="segundoVarianteB">#685D3E</color>
+    <color name="backgroundColorB">#605945</color>
 
 
 </resources>

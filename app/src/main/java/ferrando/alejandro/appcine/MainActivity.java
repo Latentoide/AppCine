@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
                 if(!usu.isEmpty() && !pass.isEmpty()){
                     User u = ControllerBD.getInstance(getApplicationContext()).getUser(usu);
                     if(u.getPassword().equals(pass)){
+                        ControllerBD.getInstance(getApplicationContext()).setUserApp(u);
                         Intent intent = new Intent(MainActivity.this, FilmsActivity.class);
                         intent.putExtra("usu", u.getUsername());
                         startActivity(intent);

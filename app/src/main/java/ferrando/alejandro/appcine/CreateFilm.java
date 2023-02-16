@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -14,7 +15,6 @@ import android.widget.Toast;
 import ferrando.alejandro.appcine.controller.ControllerBD;
 import ferrando.alejandro.appcine.model.Film;
 import ferrando.alejandro.appcine.model.User;
-import ferrando.alejandro.appcine.model.tipos.Tipo;
 import ferrando.alejandro.appcine.model.tipos.TipoEdadMin;
 import ferrando.alejandro.appcine.model.tipos.TipoGeneros;
 import ferrando.alejandro.appcine.recicler.FilmsActivity;
@@ -25,12 +25,13 @@ public class CreateFilm extends AppCompatActivity {
     Spinner genero, minEdad;
 
     Button volver, crearPeli;
+    CheckBox cb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_film);
 
-        String user = getIntent().getStringExtra("usu");
+        String user = ControllerBD.getInstance(this).getUserApp();
         User u = ControllerBD.getInstance(this).getUser(user);
 
         ArrayAdapter<TipoGeneros> adGenero = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, TipoGeneros.values());
@@ -38,6 +39,7 @@ public class CreateFilm extends AppCompatActivity {
 
         genero = findViewById(R.id.spinGeneroFilmCreate);
         minEdad = findViewById(R.id.spinEdadFilmCreate);
+        cb = findViewById(R.id.isInCartelera);
 
         genero.setAdapter(adGenero);
         minEdad.setAdapter(adMinEdad);
@@ -70,6 +72,7 @@ public class CreateFilm extends AppCompatActivity {
                     f.setDescripcion(descripcion.getText().toString());
                     f.setEdad_min((TipoEdadMin) minEdad.getSelectedItem());
                     f.setCartelera(url.getText().toString());
+                    f.setIsInCartelera(cb.isChecked());
 
                     ControllerBD.getInstance(getApplicationContext()).updateFilm(f);
                     Toast.makeText(CreateFilm.this, "Pelicula creada", Toast.LENGTH_SHORT).show();

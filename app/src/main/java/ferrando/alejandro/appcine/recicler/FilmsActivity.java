@@ -14,6 +14,7 @@ import java.util.List;
 
 import ferrando.alejandro.appcine.CreateFilm;
 import ferrando.alejandro.appcine.CreateSes;
+import ferrando.alejandro.appcine.DetailFilm;
 import ferrando.alejandro.appcine.R;
 import ferrando.alejandro.appcine.SignUpActivity;
 import ferrando.alejandro.appcine.controller.ControllerBD;
@@ -28,7 +29,7 @@ public class FilmsActivity extends AppCompatActivity implements View.OnClickList
     FloatingActionButton createFilm;
     FloatingActionButton createSes;
 
-
+    String user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +38,12 @@ public class FilmsActivity extends AppCompatActivity implements View.OnClickList
         createTr = findViewById(R.id.butCreateTra);
         createFilm = findViewById(R.id.butCreateFilm);
         createSes = findViewById(R.id.butCreateSes);
-        String user = getIntent().getStringExtra("usu");
+        user = getIntent().getStringExtra("usu");
         User u = ControllerBD.getInstance(this).getUser(user);
         if(!(u.getRol() == TipoUsu.ADMIN)){
             createTr.setVisibility(View.INVISIBLE);
+            createSes.setVisibility(View.INVISIBLE);
+            createFilm.setVisibility(View.INVISIBLE);
         }
 
         filmList = ControllerBD.getInstance(getApplicationContext()).getAllFilmCarteleras();
@@ -86,6 +89,10 @@ public class FilmsActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-
+        Intent myIntent = new Intent(FilmsActivity.this, DetailFilm.class);
+        int i = reciclerFilms.getChildAdapterPosition(v);
+        myIntent.putExtra("film", filmList.get(i).getTitulo());
+        myIntent.putExtra("usu", user);
+        startActivity(myIntent);
     }
 }

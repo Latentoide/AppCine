@@ -14,6 +14,15 @@
         android:theme="@style/Theme.AppCine"
         tools:targetApi="31">
         <activity
+            android:name=".CompraActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ButacasActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DetailFilm"
+            android:exported="false" />
+        <activity
             android:name=".CreateSes"
             android:exported="false" />
         <activity

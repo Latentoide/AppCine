@@ -2,19 +2,30 @@ package ferrando.alejandro.appcine.model;
 
 import androidx.annotation.NonNull;
 
+import java.io.Serializable;
+
 import ferrando.alejandro.appcine.model.tipos.TipoEdadMin;
 import ferrando.alejandro.appcine.model.tipos.TipoGeneros;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class Film extends RealmObject {
+public class Film extends RealmObject implements Serializable {
     @PrimaryKey
     String titulo;
     String duracion;
     String descripcion;
     String genero;
     long edad_min;
-    String cartelera;
+    String url;
+    boolean isCartelera;
+
+    public boolean getIsInCartelera() {
+        return isCartelera;
+    }
+
+    public void setIsInCartelera(boolean isCartelera) {
+        this.isCartelera = isCartelera;
+    }
 
     public String getTitulo() {
         return titulo;
@@ -64,11 +75,11 @@ public class Film extends RealmObject {
     }
 
     public String getCartelera() {
-        return cartelera;
+        return url;
     }
 
     public void setCartelera(String cartelera) {
-        this.cartelera = cartelera;
+        this.url = cartelera;
     }
 
     public void setGenero(String genero) {

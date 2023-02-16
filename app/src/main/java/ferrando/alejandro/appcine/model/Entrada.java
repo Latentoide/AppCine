@@ -8,7 +8,9 @@ public class Entrada extends RealmObject {
     int id;
     int idSesion;
     int fila;
-    int butaca;
+    int butacaX;
+    int butacaY;
+    int idVenta;
 
     public int getId() {
         return id;
@@ -34,11 +36,27 @@ public class Entrada extends RealmObject {
         this.fila = fila;
     }
 
-    public int getButaca() {
-        return butaca;
+    public int getButacaX() {
+        return butacaX;
     }
 
-    public void setButaca(int butaca) {
-        this.butaca = butaca;
+    public void setButacaX(int butacaX) {
+        this.butacaX = butacaX;
+    }
+
+    public int getButacaY() {
+        return butacaY;
+    }
+
+    public void setButacaY(int butacaY) {
+        this.butacaY = butacaY;
+    }
+
+    public int getIdVenta() {
+        return idVenta;
+    }
+
+    public void setIdVenta(int idVenta) {
+        this.idVenta = idVenta;
     }
 }

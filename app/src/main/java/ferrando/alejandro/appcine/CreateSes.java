@@ -37,7 +37,7 @@ public class CreateSes extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_ses);
 
-        String user = getIntent().getStringExtra("usu");
+        String user = ControllerBD.getInstance(this).getUserApp();
         User u = ControllerBD.getInstance(this).getUser(user);
 
         spinTipoSala = findViewById(R.id.spiTipo);
@@ -88,23 +88,27 @@ public class CreateSes extends AppCompatActivity {
                         String peliculaText = spinFilm.getSelectedItem().toString();
                         Film f = ControllerBD.getInstance(getApplicationContext()).getFilm(peliculaText);
 
-                        Date date = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(hora.getText().toString());
-                        int lastIndex = ControllerBD.getInstance(getApplicationContext()).getLastIndexSesion();
-                        lastIndex++;
-                        Sesion s = new Sesion();
-                        s.setId(lastIndex);
-                        s.setHora(date);
-                        s.setIdPelicula(f.getTitulo());
-                        s.setIdSala(sala.getId());
-                        ControllerBD.getInstance(getApplicationContext()).updateSesion(s);
-                        Toast.makeText(CreateSes.this, "Sesion creada", Toast.LENGTH_SHORT).show();
+                        try{
+                            Date date = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(hora.getText().toString());
+                            int lastIndex = ControllerBD.getInstance(getApplicationContext()).getLastIndexSesion();
+                            lastIndex++;
+                            Sesion s = new Sesion();
+                            s.setId(lastIndex);
+                            s.setHora(date);
+                            s.setIdPelicula(f.getTitulo());
+                            s.setIdSala(sala.getId());
+                            ControllerBD.getInstance(getApplicationContext()).updateSesion(s);
+                            Toast.makeText(CreateSes.this, "Sesion creada", Toast.LENGTH_SHORT).show();
+                        }catch (Exception e){
+                            Toast.makeText(CreateSes.this, "Hora mal colocada", Toast.LENGTH_SHORT).show();
+                        }
 
                         hora.setText("");
                     }else{
                         Toast.makeText(CreateSes.this, "Rellena todos los campos por favor", Toast.LENGTH_SHORT).show();
                     }
 
-                } catch (ParseException e) {
+                } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
             }

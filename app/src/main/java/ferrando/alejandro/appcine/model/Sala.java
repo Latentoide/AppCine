@@ -41,9 +41,9 @@ public class Sala extends RealmObject {
     public Tipo getTipo() {
         switch (tipo){
             case 1:
-                return Tipo.TRES;
+                return Tipo.TRESD;
             case 2:
-                return Tipo.CUATROX;
+                return Tipo.CUATRODX;
             default:
                 return Tipo.NORMAL;
         }
