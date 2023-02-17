@@ -15,6 +15,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import ferrando.alejandro.appcine.db.DB;
+import ferrando.alejandro.appcine.model.AsientoOcupado;
 import ferrando.alejandro.appcine.model.Entrada;
 import ferrando.alejandro.appcine.model.Film;
 import ferrando.alejandro.appcine.model.Sala;
@@ -32,6 +33,23 @@ public class ControllerBD {
     public static ControllerBD getInstance(Context context){
         con = DB.getInstance().conectar(context);
         return instance;
+    }
+
+    public List<AsientoOcupado> getAllButacasOcupadasDeSala(Sesion s){
+        List<Entrada> entradas = getAllEntradasFromSesion(s);
+        List<AsientoOcupado> ao = new LinkedList<>();
+        for(Entrada e : entradas){
+            ao.add(new AsientoOcupado(e.getButacaX(), e.getButacaY(), s.getIdSala()));
+        }
+        return ao;
+    }
+
+    public List<Entrada> getAllEntradasFromSesion(Sesion sesion){
+        return con.where(Entrada.class).equalTo("idSesion", sesion.getId()).findAll();
+    }
+
+    public List<Venta> getAllVentas(){
+        return con.where(Venta.class).findAll();
     }
 
     public List<Sesion> getAllHoursSesionsFromFilmToday(Film f){

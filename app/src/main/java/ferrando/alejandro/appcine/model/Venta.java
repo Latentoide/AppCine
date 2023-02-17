@@ -8,7 +8,7 @@ import io.realm.annotations.PrimaryKey;
 public class Venta extends RealmObject {
     @PrimaryKey
     int id;
-    String idEmpleado;
+    String idUsuario;
     float importe;
     Date hora;
 
@@ -20,12 +20,12 @@ public class Venta extends RealmObject {
         this.id = id;
     }
 
-    public String getIdEmpleado() {
-        return idEmpleado;
+    public String getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setIdEmpleado(String idEmpleado) {
-        this.idEmpleado = idEmpleado;
+    public void setIdUsuario(String idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public float getImporte() {

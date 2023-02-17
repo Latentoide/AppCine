@@ -11,13 +11,17 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import ferrando.alejandro.appcine.controller.ControllerBD;
 import ferrando.alejandro.appcine.model.AsientoOcupado;
 import ferrando.alejandro.appcine.model.Entrada;
+import ferrando.alejandro.appcine.model.Film;
 import ferrando.alejandro.appcine.model.Sala;
 import ferrando.alejandro.appcine.model.Sesion;
 import ferrando.alejandro.appcine.model.TotButacas;
@@ -25,7 +29,6 @@ import ferrando.alejandro.appcine.model.User;
 import ferrando.alejandro.appcine.model.Venta;
 import ferrando.alejandro.appcine.model.tipos.Tipo;
 import ferrando.alejandro.appcine.recicler.AdapterBut;
-import ferrando.alejandro.appcine.recicler.AdapterCine;
 import ferrando.alejandro.appcine.recicler.FilmsActivity;
 
 public class CompraActivity extends AppCompatActivity{
@@ -36,6 +39,7 @@ public class CompraActivity extends AppCompatActivity{
     RecyclerView rcView;
     Sesion sesion;
     User u;
+    Film f;
     int totalDinero;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +51,7 @@ public class CompraActivity extends AppCompatActivity{
         volver = findViewById(R.id.butVolverCompra);
 
         butacas = ((TotButacas) getIntent().getSerializableExtra("butacas") ).getButacas();
-
+        f = ControllerBD.getInstance(this).getFilm(getIntent().getStringExtra("film"));
         String user = ControllerBD.getInstance(this).getUserApp();
         u = ControllerBD.getInstance(this).getUser(user);
         sesion = ControllerBD.getInstance(this).getSesion(getIntent().getExtras().getInt("sesion"));
@@ -78,8 +82,11 @@ public class CompraActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 Venta venta = new Venta();
-                venta.setHora(sesion.getHora());
-                venta.setIdEmpleado(u.getUsername());
+
+                Date c = Calendar.getInstance().getTime();
+
+                venta.setHora(c);
+                venta.setIdUsuario(u.getUsername());
                 venta.setImporte(totalDinero);
                 venta.setId(ControllerBD.getInstance(getApplicationContext()).getLastIndexVenta());
 
@@ -108,7 +115,10 @@ public class CompraActivity extends AppCompatActivity{
             public void onClick(View v) {
                 Intent intent = new Intent(CompraActivity.this, ButacasActivity.class);
                 intent.putExtra("usu", user);
+                intent.putExtra("sesion", sesion.getId());
+                intent.putExtra("film", f.getTitulo());
                 startActivity(intent);
+                finish();
             }
         });
     }

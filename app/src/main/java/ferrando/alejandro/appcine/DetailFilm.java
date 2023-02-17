@@ -73,6 +73,7 @@ public class DetailFilm extends AppCompatActivity implements View.OnClickListene
                 Intent intent = new Intent(DetailFilm.this, FilmsActivity.class);
                 intent.putExtra("usu", user);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -88,7 +89,7 @@ public class DetailFilm extends AppCompatActivity implements View.OnClickListene
                 fa.setDuracion(f.getDuracion());
                 fa.setGenero(f.getGenero());
                 fa.setIsInCartelera(isChecked);
-                ControllerBD.getInstance(getApplicationContext()).updateFilm(f);
+                ControllerBD.getInstance(getApplicationContext()).updateFilm(fa);
             }
         });
     }
@@ -99,6 +100,8 @@ public class DetailFilm extends AppCompatActivity implements View.OnClickListene
         Intent intent = new Intent(DetailFilm.this, ButacasActivity.class);
         intent.putExtra("sesion", sesionList.get(i).getId());
         intent.putExtra("usu", user);
+        intent.putExtra("film", f.getTitulo());
         startActivity(intent);
+        finish();
     }
 }

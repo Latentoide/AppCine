@@ -46,7 +46,7 @@ public class CreateSes extends AppCompatActivity {
         hora = findViewById(R.id.sesHora);
 
         ArrayAdapter<Tipo> ar = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Tipo.values());
-        ArrayAdapter<Film> adFilm = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, ControllerBD.getInstance(this).getAllFilms());
+        ArrayAdapter<Film> adFilm = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, ControllerBD.getInstance(this).getAllFilmCarteleras());
 
         spinTipoSala.setAdapter(ar);
         spinFilm.setAdapter(adFilm);
@@ -74,6 +74,7 @@ public class CreateSes extends AppCompatActivity {
                 Intent intent = new Intent(CreateSes.this, FilmsActivity.class);
                 intent.putExtra("usu", user);
                 startActivity(intent);
+                finish();
             }
         });
 

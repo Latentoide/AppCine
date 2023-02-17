@@ -17,6 +17,7 @@ import ferrando.alejandro.appcine.CreateSes;
 import ferrando.alejandro.appcine.DetailFilm;
 import ferrando.alejandro.appcine.R;
 import ferrando.alejandro.appcine.SignUpActivity;
+import ferrando.alejandro.appcine.VentasActivity;
 import ferrando.alejandro.appcine.controller.ControllerBD;
 import ferrando.alejandro.appcine.model.Film;
 import ferrando.alejandro.appcine.model.User;
@@ -28,7 +29,8 @@ public class FilmsActivity extends AppCompatActivity implements View.OnClickList
     FloatingActionButton createTr;
     FloatingActionButton createFilm;
     FloatingActionButton createSes;
-
+    FloatingActionButton verAllFilms;
+    FloatingActionButton verAllVentas;
     String user;
 
     @Override
@@ -38,6 +40,8 @@ public class FilmsActivity extends AppCompatActivity implements View.OnClickList
         createTr = findViewById(R.id.butCreateTra);
         createFilm = findViewById(R.id.butCreateFilm);
         createSes = findViewById(R.id.butCreateSes);
+        verAllFilms = findViewById(R.id.seeAllFilms);
+        verAllVentas = findViewById(R.id.buttonVerVentas);
         user = getIntent().getStringExtra("usu");
         User u = ControllerBD.getInstance(this).getUser(user);
         if(!(u.getRol() == TipoUsu.ADMIN)){
@@ -45,8 +49,13 @@ public class FilmsActivity extends AppCompatActivity implements View.OnClickList
             createSes.setVisibility(View.INVISIBLE);
             createFilm.setVisibility(View.INVISIBLE);
         }
-
-        filmList = ControllerBD.getInstance(getApplicationContext()).getAllFilmCarteleras();
+        boolean isFilmsOnly = false;
+        isFilmsOnly = getIntent().getBooleanExtra("isOnly", false);
+        if(isFilmsOnly){
+            filmList = ControllerBD.getInstance(getApplicationContext()).getAllFilms();
+        }else{
+            filmList = ControllerBD.getInstance(getApplicationContext()).getAllFilmCarteleras();
+        }
 
         reciclerFilms = findViewById(R.id.filmsRecicler);
 
@@ -64,6 +73,7 @@ public class FilmsActivity extends AppCompatActivity implements View.OnClickList
                 Intent intent = new Intent(FilmsActivity.this, SignUpActivity.class);
                 intent.putExtra("usu", user);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -73,6 +83,7 @@ public class FilmsActivity extends AppCompatActivity implements View.OnClickList
                 Intent intent = new Intent(FilmsActivity.this, CreateFilm.class);
                 intent.putExtra("usu", user);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -82,9 +93,29 @@ public class FilmsActivity extends AppCompatActivity implements View.OnClickList
                 Intent intent = new Intent(FilmsActivity.this, CreateSes.class);
                 intent.putExtra("usu", user);
                 startActivity(intent);
+                finish();
             }
         });
 
+        verAllFilms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FilmsActivity.this, FilmsActivity.class);
+                intent.putExtra("usu", user);
+                intent.putExtra("isOnly", true);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        verAllVentas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FilmsActivity.this, VentasActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     @Override
@@ -94,5 +125,6 @@ public class FilmsActivity extends AppCompatActivity implements View.OnClickList
         myIntent.putExtra("film", filmList.get(i).getTitulo());
         myIntent.putExtra("usu", user);
         startActivity(myIntent);
+        finish();
     }
 }

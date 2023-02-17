@@ -58,6 +58,7 @@ public class CreateFilm extends AppCompatActivity {
                 Intent intent = new Intent(CreateFilm.this, FilmsActivity.class);
                 intent.putExtra("usu", user);
                 startActivity(intent);
+                finish();
             }
         });
 

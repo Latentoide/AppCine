@@ -1,5 +1,7 @@
 package ferrando.alejandro.appcine.model;
 
+import androidx.annotation.Nullable;
+
 import java.io.Serializable;
 
 public class AsientoOcupado implements Serializable {
@@ -24,5 +26,14 @@ public class AsientoOcupado implements Serializable {
 
     public int getIdSala() {
         return idSala;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if(obj instanceof AsientoOcupado){
+            AsientoOcupado ao = (AsientoOcupado) obj;
+            return ao.getX() == getX() && ao.getY() == ao.getY() && getIdSala() == ao.getIdSala();
+        }
+        return false;
     }
 }

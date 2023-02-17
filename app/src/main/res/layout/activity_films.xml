@@ -59,4 +59,28 @@
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/baseline_local_activity_24" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/seeAllFilms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="@+id/butCreateSes"
+        app:layout_constraintEnd_toStartOf="@+id/butCreateSes"
+        app:layout_constraintTop_toTopOf="@+id/butCreateSes"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/baseline_video_camera_back_24" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/buttonVerVentas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="@+id/seeAllFilms"
+        app:layout_constraintEnd_toStartOf="@+id/seeAllFilms"
+        app:layout_constraintTop_toTopOf="@+id/seeAllFilms"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/baseline_point_of_sale_24" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
