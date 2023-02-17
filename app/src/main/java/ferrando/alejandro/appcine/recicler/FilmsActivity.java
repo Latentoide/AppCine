@@ -42,7 +42,7 @@ public class FilmsActivity extends AppCompatActivity implements View.OnClickList
         createSes = findViewById(R.id.butCreateSes);
         verAllFilms = findViewById(R.id.seeAllFilms);
         verAllVentas = findViewById(R.id.buttonVerVentas);
-        user = getIntent().getStringExtra("usu");
+        user = ControllerBD.getInstance(this).getUserApp();
         User u = ControllerBD.getInstance(this).getUser(user);
         if(!(u.getRol() == TipoUsu.ADMIN)){
             createTr.setVisibility(View.INVISIBLE);

@@ -52,6 +52,11 @@ public class VentasActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-
+        int i = reciclerFilms.getChildAdapterPosition(v);
+        Venta va = ventaList.get(i);
+        Intent intent = new Intent(VentasActivity.this, EntradasActivity.class);
+        intent.putExtra("venta", va.getId());
+        startActivity(intent);
+        finish();
     }
 }

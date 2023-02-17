@@ -67,7 +67,7 @@ public class ButacasActivity extends AppCompatActivity {
                 cb.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT));
                 cb.setId(++contadorTotal);
                 for(AsientoOcupado ao : listaDeButacasOcupadas){
-                    if(ao.getX() == j && ao.getY() == i){
+                    if(ao.getX() == j+1 && ao.getY() == i+1){
                         cb.setChecked(false);
                         cb.setEnabled(false);
                         cb.setButtonDrawable(R.drawable.terminado);

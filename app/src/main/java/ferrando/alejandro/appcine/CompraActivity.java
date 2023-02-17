@@ -50,7 +50,7 @@ public class CompraActivity extends AppCompatActivity{
         rcView = findViewById(R.id.reciclerCompra);
         volver = findViewById(R.id.butVolverCompra);
 
-        butacas = ((TotButacas) getIntent().getSerializableExtra("butacas") ).getButacas();
+        butacas = ((TotButacas) getIntent().getSerializableExtra("butacas")).getButacas();
         f = ControllerBD.getInstance(this).getFilm(getIntent().getStringExtra("film"));
         String user = ControllerBD.getInstance(this).getUserApp();
         u = ControllerBD.getInstance(this).getUser(user);
@@ -89,6 +89,7 @@ public class CompraActivity extends AppCompatActivity{
                 venta.setIdUsuario(u.getUsername());
                 venta.setImporte(totalDinero);
                 venta.setId(ControllerBD.getInstance(getApplicationContext()).getLastIndexVenta());
+                venta.setIdSala(sesion.getIdSala());
 
                 for(AsientoOcupado asiento : butacas){
                     Entrada entrada = new Entrada();

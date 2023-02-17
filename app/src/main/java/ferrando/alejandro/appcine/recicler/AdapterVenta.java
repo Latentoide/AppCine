@@ -35,7 +35,7 @@ public class AdapterVenta extends RecyclerView.Adapter<AdapterVenta.ViewHolder> 
     @NonNull
     @Override
     public AdapterVenta.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.view_sesion, parent, false);
+        View view = inflater.inflate(R.layout.view_venta, parent, false);
         view.setOnClickListener(clicker);
         return new AdapterVenta.ViewHolder(view);
     }
@@ -43,9 +43,9 @@ public class AdapterVenta extends RecyclerView.Adapter<AdapterVenta.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull AdapterVenta.ViewHolder viewHolder, int position) {
         Venta v = listVentas.get(position);
-        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss", Locale.getDefault());
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
         String formattedDate = df.format(v.getHora());
-        viewHolder.horaTotal.setText("Hora: " + formattedDate);
+        viewHolder.horaTotal.setText("Hora: "+ formattedDate);
         viewHolder.idVenta.setText("Id Venta: " + v.getId());
         viewHolder.idEmpleado.setText("Usuario: " + v.getIdUsuario());
         viewHolder.precioTotal.setText("Precio total: " + v.getImporte());

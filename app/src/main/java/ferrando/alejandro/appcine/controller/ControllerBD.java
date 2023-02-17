@@ -43,7 +43,34 @@ public class ControllerBD {
         }
         return ao;
     }
+    public Sala getSalaFromSesion(int id){
+        Sesion s = getSesion(id);
+        Sala sala = getSala(s.getIdSala());
+        return sala;
+    }
 
+    public List<Entrada> getEntradasFromVenta(Venta v){
+        Sala sala = getSala(v.getIdSala());
+        Sesion s = getSesionFromSala(sala);
+        List<Entrada> entradas = getAllEntradasFromSesion(s);
+        List<Entrada> nEntradas = new LinkedList<>();
+        for(Entrada entrada : entradas){
+            if(entrada.getIdVenta() == v.getId()){
+                nEntradas.add(entrada);
+            }
+        }
+        return nEntradas;
+    }
+
+    public Sesion getSesionFromSala(Sala id){
+        List<Sesion> sesiones = getAllSesion();
+        for(Sesion s : sesiones){
+            if(s.getIdSala() == id.getId()){
+                return s;
+            }
+        }
+        return null;
+    }
     public List<Entrada> getAllEntradasFromSesion(Sesion sesion){
         return con.where(Entrada.class).equalTo("idSesion", sesion.getId()).findAll();
     }
