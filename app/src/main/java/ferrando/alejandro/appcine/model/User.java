@@ -60,10 +60,8 @@ public class User extends RealmObject implements Serializable {
         switch (rol) {
             case 1:
                 return TipoUsu.CLIENTE;
-            case 2:
-                return TipoUsu.ADMIN;
             default:
-                return TipoUsu.TRABAJADOR;
+                return TipoUsu.ADMIN;
         }
     }
 

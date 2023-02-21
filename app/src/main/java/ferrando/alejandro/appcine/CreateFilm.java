@@ -1,7 +1,9 @@
 package ferrando.alejandro.appcine;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -65,23 +67,41 @@ public class CreateFilm extends AppCompatActivity {
         crearPeli.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!duracion.getText().toString().isEmpty() && !duracion.getText().toString().isEmpty() && !descripcion.getText().toString().isEmpty() && !url.getText().toString().isEmpty()){
-                    Film f = new Film();
-                    f.setGenero(genero.getSelectedItem().toString());
-                    f.setDuracion(duracion.getText().toString());
-                    f.setTitulo(titulo.getText().toString());
-                    f.setDescripcion(descripcion.getText().toString());
-                    f.setEdad_min((TipoEdadMin) minEdad.getSelectedItem());
-                    f.setCartelera(url.getText().toString());
-                    f.setIsInCartelera(cb.isChecked());
 
-                    ControllerBD.getInstance(getApplicationContext()).updateFilm(f);
-                    Toast.makeText(CreateFilm.this, "Pelicula creada", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(CreateFilm.this, "Rellan todos los campos", Toast.LENGTH_SHORT).show();
-                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(CreateFilm.this);
+                builder.setMessage("¿Seguro que quieres crear la película?")
+                        .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                if(!duracion.getText().toString().isEmpty() && !duracion.getText().toString().isEmpty() && !descripcion.getText().toString().isEmpty() && !url.getText().toString().isEmpty()){
+                                    Film f = new Film();
+                                    f.setGenero(genero.getSelectedItem().toString());
+                                    f.setDuracion(duracion.getText().toString());
+                                    f.setTitulo(titulo.getText().toString());
+                                    f.setDescripcion(descripcion.getText().toString());
+                                    f.setEdad_min((TipoEdadMin) minEdad.getSelectedItem());
+                                    f.setCartelera(url.getText().toString());
+                                    f.setIsInCartelera(cb.isChecked());
 
+                                    ControllerBD.getInstance(getApplicationContext()).postFilm(f);
 
+                                    Film comprobacion = ControllerBD.getInstance(getApplicationContext()).getFilm(f.getTitulo());
+                                    if(comprobacion != null){
+                                        Toast.makeText(CreateFilm.this, "Pelicula creada", Toast.LENGTH_SHORT).show();
+                                    }else{
+                                        Toast.makeText(CreateFilm.this, "La película ya estaba creada", Toast.LENGTH_SHORT).show();
+                                    }
+                                }else{
+                                    Toast.makeText(CreateFilm.this, "Tienes que rellenar todos los campos", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                Toast.makeText(CreateFilm.this, "Operacion cancelada", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                builder.create().show();
             }
         });
 

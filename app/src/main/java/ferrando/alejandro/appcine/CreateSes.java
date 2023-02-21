@@ -1,9 +1,12 @@
 package ferrando.alejandro.appcine;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.service.controls.Control;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,6 +26,7 @@ import ferrando.alejandro.appcine.model.Sala;
 import ferrando.alejandro.appcine.model.Sesion;
 import ferrando.alejandro.appcine.model.User;
 import ferrando.alejandro.appcine.model.tipos.Tipo;
+import ferrando.alejandro.appcine.model.tipos.TipoEdadMin;
 import ferrando.alejandro.appcine.recicler.FilmsActivity;
 
 public class CreateSes extends AppCompatActivity {
@@ -81,37 +85,50 @@ public class CreateSes extends AppCompatActivity {
         crearSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    if(!spinSalas.getSelectedItem().toString().isEmpty() && !spinFilm.getSelectedItem().toString().isEmpty() && !hora.getText().toString().isEmpty()){
-                        int salaText = Integer.parseInt(spinSalas.getSelectedItem().toString());
-                        Sala sala = ControllerBD.getInstance(getApplicationContext()).getSala(salaText);
+                AlertDialog.Builder builder = new AlertDialog.Builder(CreateSes.this);
+                builder.setMessage("¿Seguro que quieres crear esta sesión?")
+                        .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                try {
+                                    if(!spinSalas.getSelectedItem().toString().isEmpty() && !spinFilm.getSelectedItem().toString().isEmpty() && !hora.getText().toString().isEmpty()){
+                                        int salaText = Integer.parseInt(spinSalas.getSelectedItem().toString());
+                                        Sala sala = ControllerBD.getInstance(getApplicationContext()).getSala(salaText);
 
-                        String peliculaText = spinFilm.getSelectedItem().toString();
-                        Film f = ControllerBD.getInstance(getApplicationContext()).getFilm(peliculaText);
+                                        String peliculaText = spinFilm.getSelectedItem().toString();
+                                        Film f = ControllerBD.getInstance(getApplicationContext()).getFilm(peliculaText);
 
-                        try{
-                            Date date = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(hora.getText().toString());
-                            int lastIndex = ControllerBD.getInstance(getApplicationContext()).getLastIndexSesion();
-                            lastIndex++;
-                            Sesion s = new Sesion();
-                            s.setId(lastIndex);
-                            s.setHora(date);
-                            s.setIdPelicula(f.getTitulo());
-                            s.setIdSala(sala.getId());
-                            ControllerBD.getInstance(getApplicationContext()).updateSesion(s);
-                            Toast.makeText(CreateSes.this, "Sesion creada", Toast.LENGTH_SHORT).show();
-                        }catch (Exception e){
-                            Toast.makeText(CreateSes.this, "Hora mal colocada", Toast.LENGTH_SHORT).show();
-                        }
+                                        try{
+                                            Date date = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(hora.getText().toString());
+                                            int lastIndex = ControllerBD.getInstance(getApplicationContext()).getLastIndexSesion();
+                                            lastIndex++;
+                                            Sesion s = new Sesion();
+                                            s.setId(lastIndex);
+                                            s.setHora(date);
+                                            s.setIdPelicula(f.getTitulo());
+                                            s.setIdSala(sala.getId());
+                                            ControllerBD.getInstance(getApplicationContext()).updateSesion(s);
+                                            Toast.makeText(CreateSes.this, "Sesion creada", Toast.LENGTH_SHORT).show();
+                                        }catch (Exception e){
+                                            Toast.makeText(CreateSes.this, "Hora mal colocada", Toast.LENGTH_SHORT).show();
+                                        }
 
-                        hora.setText("");
-                    }else{
-                        Toast.makeText(CreateSes.this, "Rellena todos los campos por favor", Toast.LENGTH_SHORT).show();
-                    }
+                                        hora.setText("");
+                                    }else{
+                                        Toast.makeText(CreateSes.this, "Rellena todos los campos por favor", Toast.LENGTH_SHORT).show();
+                                    }
 
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
+                                } catch (Exception e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                Toast.makeText(CreateSes.this, "Operacion cancelada", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                builder.create().show();
             }
         });
 

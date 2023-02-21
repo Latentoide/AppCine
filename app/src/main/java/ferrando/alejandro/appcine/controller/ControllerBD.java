@@ -132,8 +132,13 @@ public class ControllerBD {
 
     //CRUD DE TODAS LAS CLASES
 
+    public List<User> getAllUserCount(){
+        return con.where(User.class).findAll();
+    }
+
     public User getUser(String username){
-        return con.where(User.class).equalTo("username", username).findFirst();
+        User u = con.where(User.class).equalTo("username", username).findFirst();
+        return u;
     }
     public Entrada getEntrada(int id){
         return con.where(Entrada.class).equalTo("id", id).findFirst();

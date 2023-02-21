@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.List;
+
 import ferrando.alejandro.appcine.controller.ControllerBD;
 import ferrando.alejandro.appcine.controller.StartBD;
 import ferrando.alejandro.appcine.db.DB;
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
                 String usu = usuario.getText().toString();
                 String pass = password.getText().toString();
                 if(!usu.isEmpty() && !pass.isEmpty()){
+                    List<User> us = ControllerBD.getInstance(getApplicationContext()).getAllUserCount();
                     User u = ControllerBD.getInstance(getApplicationContext()).getUser(usu);
                     if(u.getPassword().equals(pass)){
                         ControllerBD.getInstance(getApplicationContext()).setUserApp(u);

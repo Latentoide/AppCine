@@ -1,9 +1,11 @@
 package ferrando.alejandro.appcine;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -28,6 +30,7 @@ import ferrando.alejandro.appcine.model.TotButacas;
 import ferrando.alejandro.appcine.model.User;
 import ferrando.alejandro.appcine.model.Venta;
 import ferrando.alejandro.appcine.model.tipos.Tipo;
+import ferrando.alejandro.appcine.model.tipos.TipoEdadMin;
 import ferrando.alejandro.appcine.recicler.AdapterBut;
 import ferrando.alejandro.appcine.recicler.FilmsActivity;
 
@@ -81,33 +84,46 @@ public class CompraActivity extends AppCompatActivity{
         comprar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Venta venta = new Venta();
+                AlertDialog.Builder builder = new AlertDialog.Builder(CompraActivity.this);
+                builder.setMessage("¿Seguro que quieres hacer la compra?")
+                        .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                Venta venta = new Venta();
 
-                Date c = Calendar.getInstance().getTime();
+                                Date c = Calendar.getInstance().getTime();
 
-                venta.setHora(c);
-                venta.setIdUsuario(u.getUsername());
-                venta.setImporte(totalDinero);
-                venta.setId(ControllerBD.getInstance(getApplicationContext()).getLastIndexVenta());
-                venta.setIdSala(sesion.getIdSala());
+                                venta.setHora(c);
+                                venta.setIdUsuario(u.getUsername());
+                                venta.setImporte(totalDinero);
+                                venta.setId(ControllerBD.getInstance(getApplicationContext()).getLastIndexVenta());
+                                venta.setIdSala(sesion.getIdSala());
 
-                for(AsientoOcupado asiento : butacas){
-                    Entrada entrada = new Entrada();
-                    entrada.setButacaX(asiento.getX());
-                    entrada.setButacaY(asiento.getY());
-                    entrada.setIdVenta(venta.getId());
-                    entrada.setIdSesion(sesion.getId());
-                    entrada.setId(ControllerBD.getInstance(getApplicationContext()).getLastIndexEntrada());
+                                for(AsientoOcupado asiento : butacas){
+                                    Entrada entrada = new Entrada();
+                                    entrada.setButacaX(asiento.getX());
+                                    entrada.setButacaY(asiento.getY());
+                                    entrada.setIdVenta(venta.getId());
+                                    entrada.setIdSesion(sesion.getId());
+                                    entrada.setId(ControllerBD.getInstance(getApplicationContext()).getLastIndexEntrada());
 
-                    ControllerBD.getInstance(getApplicationContext()).updateEntrada(entrada);
-                }
-                ControllerBD.getInstance(getApplicationContext()).updateVenta(venta);
+                                    ControllerBD.getInstance(getApplicationContext()).updateEntrada(entrada);
+                                }
+                                ControllerBD.getInstance(getApplicationContext()).updateVenta(venta);
 
-                Toast.makeText(CompraActivity.this, "Compra realizada", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(CompraActivity.this, "Compra realizada", Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(CompraActivity.this, FilmsActivity.class);
-                intent.putExtra("usu", user);
-                startActivity(intent);
+                                Intent intent = new Intent(CompraActivity.this, FilmsActivity.class);
+                                intent.putExtra("usu", user);
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                Toast.makeText(CompraActivity.this, "Operacion cancelada", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                builder.create().show();
             }
         });
 

@@ -31,11 +31,11 @@ public class SignUpActivity extends AppCompatActivity {
         nombre = findViewById(R.id.nombreSignUp);
         dni = findViewById(R.id.DNISingUp);
         apellido = findViewById(R.id.apellidoSingUp);
-
         String user = getIntent().getStringExtra("usu");
-
+        User u = ControllerBD.getInstance(this).getUser(user);
         con = DB.getInstance().conectar(this);
         but = findViewById(R.id.butSignUp);
+
 
         but.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +86,7 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             }
         });
+
 
     }
 }

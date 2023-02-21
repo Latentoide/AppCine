@@ -57,6 +57,10 @@ public class Film extends RealmObject implements Serializable {
                 return TipoGeneros.ACCION;
             case "Comedia":
                 return TipoGeneros.COMEDIA;
+            case "Superheroes":
+                return TipoGeneros.SUPERHEROES;
+            case "Miedo":
+                return TipoGeneros.MIEDO;
             default:
                 return TipoGeneros.ACCION;
         }
