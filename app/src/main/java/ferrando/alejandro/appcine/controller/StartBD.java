@@ -106,6 +106,7 @@ public class StartBD {
             f5.setGenero(TipoGeneros.SUPERHEROES);
             f5.setEdad_min(TipoEdadMin.A);
             f5.setIsInCartelera(true);
+
             peliculas.add(f);
             peliculas.add(f2);
             peliculas.add(f3);

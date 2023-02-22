@@ -85,12 +85,13 @@ public class FilmsActivity extends AppCompatActivity implements View.OnClickList
             }
         });
 
-        filmList = ControllerBD.getInstance(getApplicationContext()).getAllFilms();
+        filmList = (isFilmsOnly)?ControllerBD.getInstance(getApplicationContext()).getAllFilms():ControllerBD.getInstance(getApplicationContext()).getAllFilmCarteleras();
 
         AdapterCine adapterCine = new AdapterCine(this, filmList);
         adapterCine.setOnClickListener(this);
 
         if(isFilmsOnly){
+
             ItemTouchHelper mIth = new ItemTouchHelper(
                     new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT) {
                         @Override
@@ -124,7 +125,6 @@ public class FilmsActivity extends AppCompatActivity implements View.OnClickList
             mIth.attachToRecyclerView(reciclerFilms);
         }else{
             volver.setVisibility(View.INVISIBLE);
-            filmList = ControllerBD.getInstance(getApplicationContext()).getAllFilmCarteleras();
         }
         reciclerFilms.setAdapter(adapterCine);
 

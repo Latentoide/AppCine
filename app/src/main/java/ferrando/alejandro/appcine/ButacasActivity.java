@@ -123,6 +123,7 @@ public class ButacasActivity extends AppCompatActivity {
                     TotButacas tot = new TotButacas(asientosOcupados);
                     intent.putExtra("butacas", tot);
                     intent.putExtra("sesion", a);
+                    intent.putExtra("film", f);
                     startActivity(intent);
                     finish();
                 }else{

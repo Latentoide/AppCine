@@ -102,7 +102,7 @@ public class ControllerBD {
     }
 
     public List<Film> getAllFilms(){
-        return con.where(Film.class).findAll();
+        return con.where(Film.class).equalTo("isCartelera", false).findAll();
     }
 
     public List<Sesion> getAllSesion(){

@@ -54,7 +54,8 @@ public class CompraActivity extends AppCompatActivity{
         volver = findViewById(R.id.butVolverCompra);
 
         butacas = ((TotButacas) getIntent().getSerializableExtra("butacas")).getButacas();
-        f = ControllerBD.getInstance(this).getFilm(getIntent().getStringExtra("film"));
+        String fNombre = getIntent().getStringExtra("film");
+        f = ControllerBD.getInstance(this).getFilm(fNombre);
         String user = ControllerBD.getInstance(this).getUserApp();
         u = ControllerBD.getInstance(this).getUser(user);
         sesion = ControllerBD.getInstance(this).getSesion(getIntent().getExtras().getInt("sesion"));
