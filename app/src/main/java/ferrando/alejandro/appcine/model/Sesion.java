@@ -12,6 +12,17 @@ public class Sesion extends RealmObject {
     String idPelicula;
     Date hora;
 
+    public Sesion (){
+
+    }
+
+    public Sesion(int id, int idSala, String idPelicula, Date hora) {
+        this.id = id;
+        this.idSala = idSala;
+        this.idPelicula = idPelicula;
+        this.hora = hora;
+    }
+
     public int getIdSala() {
         return idSala;
     }

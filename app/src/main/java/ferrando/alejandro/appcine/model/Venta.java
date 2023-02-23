@@ -13,6 +13,18 @@ public class Venta extends RealmObject {
     Date hora;
     int idSala;
 
+    public  Venta(){
+
+    }
+
+    public Venta(int id, String idUsuario, float importe, Date hora, int idSala) {
+        this.id = id;
+        this.idUsuario = idUsuario;
+        this.importe = importe;
+        this.hora = hora;
+        this.idSala = idSala;
+    }
+
     public int getIdSala() {
         return idSala;
     }

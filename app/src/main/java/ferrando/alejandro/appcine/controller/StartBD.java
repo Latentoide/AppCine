@@ -2,14 +2,20 @@ package ferrando.alejandro.appcine.controller;
 
 import android.content.Context;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 import ferrando.alejandro.appcine.db.DB;
+import ferrando.alejandro.appcine.model.Entrada;
 import ferrando.alejandro.appcine.model.Film;
 import ferrando.alejandro.appcine.model.Sala;
 import ferrando.alejandro.appcine.model.Sesion;
 import ferrando.alejandro.appcine.model.User;
+import ferrando.alejandro.appcine.model.Venta;
 import ferrando.alejandro.appcine.model.tipos.Tipo;
 import ferrando.alejandro.appcine.model.tipos.TipoEdadMin;
 import ferrando.alejandro.appcine.model.tipos.TipoGeneros;
@@ -21,11 +27,13 @@ public class StartBD {
     List<User> users;
     List<Sala> salas;
     List<Film> peliculas;
+    List<Sesion> sesions;
 
     Context context;
 
     public StartBD(Context context){
         users = new LinkedList<>();
+        sesions = new LinkedList<>();
         salas = new LinkedList<>();
         peliculas = new LinkedList<>();
         con = DB.getInstance().conectar(context);
@@ -167,12 +175,33 @@ public class StartBD {
             salas.add(s6);
             salas.add(s7);
 
+            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
+            Calendar today = Calendar.getInstance();
+            today.add(Calendar.HOUR, 5);
+            Date d = today.getTime();
+            Sesion ses = new Sesion(1, 7, "LA NIÑA DE LA COMUNIÓN", d);
+            Sesion ses1 = new Sesion(2, 4, "Avatar 2", d);
+            Sesion ses2 = new Sesion(3, 1, "Quantumania", d);
+            Sesion ses3 = new Sesion(4, 5, "CREED III", d);
+            Sesion ses4 = new Sesion(5, 3, "¡SHAZAM! LA FURIA DE LOS DIOSES", d);
+
+            sesions.add(ses);
+            sesions.add(ses1);
+            sesions.add(ses2);
+            sesions.add(ses3);
+            sesions.add(ses4);
+
             createUsers();
             createFilms();
             createSalas();
+            createSesions();
         }
     }
-
+    public void createSesions(){
+        for(Sesion s : sesions){
+            ControllerBD.getInstance(context).updateSesion(s);
+        }
+    }
     public void createUsers(){
         for(User u : users){
             ControllerBD.getInstance(context).updateUser(u);

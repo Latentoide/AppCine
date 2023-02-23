@@ -12,6 +12,19 @@ public class Entrada extends RealmObject {
     int butacaY;
     int idVenta;
 
+    public Entrada(){
+
+    }
+
+    public Entrada(int id, int idSesion, int fila, int butacaX, int butacaY, int idVenta) {
+        this.id = id;
+        this.idSesion = idSesion;
+        this.fila = fila;
+        this.butacaX = butacaX;
+        this.butacaY = butacaY;
+        this.idVenta = idVenta;
+    }
+
     public int getId() {
         return id;
     }
